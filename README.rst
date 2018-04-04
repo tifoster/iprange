@@ -1,22 +1,19 @@
-A sample Python project
+IpAddressRange
 =======================
 
-A sample project that exists as an aid to the `Python Packaging User Guide
-<https://packaging.python.org>`_'s `Tutorial on Packaging and Distributing
-Projects <https://packaging.python.org/en/latest/distributing.html>`_.
+IpAddressRange is a basic library that supports converting between a list
+of IP addresses and several different forms of range notation.
 
-This projects does not aim to cover best practices for Python project
-development as a whole. For example, it does not provide guidance or tool
-recommendations for version control, documentation, or testing.
+The primary audience is developers looking to concisely communicate lists
+of IP addresses.
 
 `The source for this project is available here
 <https://github.com/pypa/sampleproject>`_.
 
-Most of the configuration for a Python project is done in the ``setup.py``
-file, an example of which is included in this project. You should edit this
-file accordingly to adapt this sample project to your needs.
-
 ----
+
+This project was based on the Python Sample Project distributed from 
+`<https://packaging.python.org/`_.
 
 This is the README file for the project.
 
