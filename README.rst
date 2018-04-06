@@ -8,12 +8,12 @@ The primary audience is developers looking to concisely communicate lists
 of IP addresses.
 
 `The source for this project is available here
-<https://github.com/pypa/sampleproject>`_.
+<https://github.com/timmyson/ipaddressrange>`_.
 
 ----
 
 This project was based on the Python Sample Project distributed from 
-`<https://packaging.python.org/`_.
+`<https://packaging.python.org/>`_.
 
 This is the README file for the project.
 
