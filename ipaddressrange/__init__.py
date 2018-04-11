@@ -8,16 +8,14 @@ def ip_rangify(ip_list):
         input_ips.append(ip_address(ip))
     input_ips.sort()
 
-    sequences = []
-    last_ip = None
-    for ip in input_ips:
-        if (last_ip is not None) and (last_ip == (ip - 1)):
-            last_ip = ip
-            sequences[-1].append(ip)
-        else:
-            last_ip = ip
-            sequences.append([ip])
-            next
+    if not input_ips:
+        return []
+
+    sequences = [[input_ips[0], input_ips[0]]]
+    for ip in input_ips[1:]:
+        if ip-1 != sequences[-1][-1]:
+            sequences.append([ip, ip])
+        sequences[-1][-1] = ip
 
     ranges = []
     for sequence in sequences:

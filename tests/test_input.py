@@ -4,8 +4,8 @@ import pytest
 
 
 class Test_ip_rangify(object):
-    happy_pairs = (
-        (
+    happy_pairs = (  # Tuples of the form: (constructor, repr(list of ranges))
+        (  # String and IP inputs
             ['192.168.1.1', '192.168.1.2', '192.168.1.3', '192.168.1.4'],
             "[IpRange(IPv4Address('192.168.1.1'), end=IPv4Address('192.168.1.4'))]"
         ),
@@ -16,53 +16,86 @@ class Test_ip_rangify(object):
         (
             ['192.168.3.1', IPv4Address('192.168.3.2'), '192.168.3.3', '192.168.3.4'],
             "[IpRange(IPv4Address('192.168.3.1'), end=IPv4Address('192.168.3.4'))]"
-        )
-        # TODO cases of split ranges, ranges across human readable boundaries, big and small?
-        # TODO test ranges including invalid IP's and catch exceptions
+        ),
         # TODO above three cases for IPv6
+        (  # several ranges
+            ['192.168.4.1', '192.168.4.2', '192.168.5.3', '192.168.5.4'],
+            "[IpRange(IPv4Address('192.168.4.1'), end=IPv4Address('192.168.4.2')), IpRange(IPv4Address('192.168.5.3'), end=IPv4Address('192.168.5.4'))]"
+        ),
+        (  # unsorted range
+            [IPv4Address('192.168.6.3'), IPv4Address('192.168.6.2'), IPv4Address('192.168.6.1'), IPv4Address('192.168.6.4')],
+            "[IpRange(IPv4Address('192.168.6.1'), end=IPv4Address('192.168.6.4'))]"
+        ),
+        (  # Across an octet
+            [IPv4Address('192.168.7.255'), IPv4Address('192.168.8.0'), IPv4Address('192.168.8.1')],
+            "[IpRange(IPv4Address('192.168.7.255'), end=IPv4Address('192.168.8.1'))]"
+        )
     )
 
-    def test_happyPath(self):
+    def test_happy_path(self):
         for arg, range_repr in self.happy_pairs:
-            result = repr(ip_rangify(arg))
-            assert range_repr == result
+            assert range_repr == repr(ip_rangify(arg))
+
+    def test_large_range(self):
+        size = 4000
+        r = []
+        for i in range(size):
+            r.append(IPv4Address('192.168.1.1') + i)
+        assert "[IpRange(IPv4Address('192.168.1.1'), end=IPv4Address('192.168.16.160'))]" == repr(ip_rangify(r))
 
 
 class Test_IpRange(object):
-    happy_triples = (
-        (
+    happy_triples = (  # Tuples of the form: (constructor,repr,str)
+        (  # Basic cases
             IpRange(IPv4Address('192.168.1.1'), end=IPv4Address('192.168.1.4')),
             "IpRange(IPv4Address('192.168.1.1'), end=IPv4Address('192.168.1.4'))",
-            '192.168.1.[1-4]'
+            '192.168.1.[1-4]',
+            '192.168.1.1-192.168.1.4'
         ),
         (
             IpRange(IPv4Address('192.168.2.1'), count=4),
             "IpRange(IPv4Address('192.168.2.1'), end=IPv4Address('192.168.2.4'))",
-            '192.168.2.[1-4]'
+            '192.168.2.[1-4]',
+            '192.168.2.1-192.168.2.4'
+        ),
+        (  # Range of one
+            IpRange(IPv4Address('192.168.3.1'), count=0),
+            "IpRange(IPv4Address('192.168.3.1'), end=IPv4Address('192.168.3.1'))",
+            '192.168.3.1',
+            '192.168.3.1'
         ),
         (
-            IpRange(IPv4Address('192.168.3.1'), end=IPv4Address('192.168.3.4'), count=3),
-            "IpRange(IPv4Address('192.168.3.1'), end=IPv4Address('192.168.3.4'))",
-            '192.168.3.[1-4]'
+            IpRange(IPv4Address('192.168.4.1'), count=1),
+            "IpRange(IPv4Address('192.168.4.1'), end=IPv4Address('192.168.4.1'))",
+            '192.168.4.1',
+            '192.168.4.1'
+        ),
+        (  # Range crossing octet
+            IpRange(IPv4Address('192.168.4.250'), count=10),
+            "IpRange(IPv4Address('192.168.4.250'), end=IPv4Address('192.168.5.3'))",
+            '192.168.[4.250-5.3]',
+            '192.168.4.250-192.168.5.3'
+        ),
+        (  # Diminishing range
+            IpRange(IPv4Address('192.168.6.3'), count=-3),
+            "IpRange(IPv4Address('192.168.6.1'), end=IPv4Address('192.168.6.3'))",
+            '192.168.6.[1-3]',
+            '192.168.6.1-192.168.6.3'
+        ),
+        (
+            IpRange(IPv4Address('192.168.7.3'), end=IPv4Address('192.168.7.1')),
+            "IpRange(IPv4Address('192.168.7.1'), end=IPv4Address('192.168.7.3'))",
+            '192.168.7.[1-3]',
+            '192.168.7.1-192.168.7.3'
         )
-        # TODO above three cases for IPv6
+        # TODO above cases for IPv6
     )
 
-    def test_create_listOfStrings(self):
-        for arg, range_repr, range_str in self.happy_triples:
-            print(repr(arg))
+    def test_happy_path(self):
+        for arg, range_repr, range_str, range_start_end in self.happy_triples:
             assert repr(arg) == range_repr
             assert str(arg) == range_str
-
-    def test_create_rangeOfOne(self):
-        assert repr(IpRange(IPv4Address('192.168.1.1'), count=0)) == "IpRange(IPv4Address('192.168.1.1'), end=IPv4Address('192.168.1.1'))"
-        assert str(IpRange(IPv4Address('192.168.1.1'), count=0)) == '192.168.1.1'
-        assert repr(IpRange(IPv4Address('192.168.2.1'), count=1)) == "IpRange(IPv4Address('192.168.2.1'), end=IPv4Address('192.168.2.1'))"
-        assert str(IpRange(IPv4Address('192.168.1.1'), count=1)) == '192.168.1.1'
-
-    def test_create_rangeCrossingOctet(self):
-        assert repr(IpRange(IPv4Address('192.168.0.250'), count=10)) == "IpRange(IPv4Address('192.168.0.250'), end=IPv4Address('192.168.1.3'))"
-        assert str(IpRange(IPv4Address('192.168.0.250'), count=10)) == '192.168.[0.250-1.3]'
+            assert arg.start_to_end() == range_start_end
 
     def test_exceptions(self):
         with pytest.raises(TypeError) as e_info:
@@ -75,10 +108,5 @@ class Test_IpRange(object):
             IpRange(IPv4Address('192.168.1.1'), end='192.168.1.3')
         assert 'Ending address: "192.168.1.3" must be a valid IP (v4 or v6) address.' in str(e_info.value)
         with pytest.raises(AddressValueError) as e_info:
-            IpRange(IPv4Address('255.255.255.255'), count=1)
+            IpRange(IPv4Address('255.255.255.255'), count=2)
         assert 'Count: 1 is too large, exceeding the acceptable address space for IPv4' in str(e_info.value)
-
-    # TODO test no range version of str() Not yet implemented
-    # TODO test with negative count
-
-# TODO remember to reenable flake8
