@@ -1,14 +1,14 @@
-IpAddressRange
+iprange
 =======================
 
-IpAddressRange is a basic library that supports converting between a list
+iprange is a basic library that supports converting between a list
 of IP addresses and several different forms of range notation.
 
 The primary audience is developers looking to concisely communicate lists
 of IP addresses.
 
 `The source for this project is available here
-<https://github.com/timmyson/ipaddressrange>`_.
+<https://github.com/>`_.
 
 ----
 

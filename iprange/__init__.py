@@ -13,17 +13,17 @@ def ip_rangify(ip_list):
 
     sequences = [[input_ips[0], input_ips[0]]]
     for ip in input_ips[1:]:
-        if ip-1 != sequences[-1][-1]:
+        if ip - 1 != sequences[-1][-1]:
             sequences.append([ip, ip])
         sequences[-1][-1] = ip
 
     ranges = []
     for sequence in sequences:
-        ranges.append(IpRange(sequence[0], end=sequence[-1]))
+        ranges.append(IPRange(sequence[0], end=sequence[-1]))
     return ranges
 
 
-class IpRange(object):
+class IPRange(object):
     def __init__(self, start, count=0, end=None):
         if isinstance(start, (IPv4Address, IPv6Address)):
             self.start = start
@@ -57,7 +57,7 @@ class IpRange(object):
                 break
 
     def __repr__(self):
-        return 'IpRange({!r}, end={!r})'.format(self.start, self.end)
+        return 'IPRange({!r}, end={!r})'.format(self.start, self.end)
         # return str(self) #.encode('utf-8')
 
     def __str__(self):

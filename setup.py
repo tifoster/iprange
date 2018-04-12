@@ -1,7 +1,7 @@
 """A library for concisely expressing groups of IP addresses
 
 See:
-https://github.com/timmyson/ipaddressrange
+https://github.com/timmyson/iprange
 """
 
 # Always prefer setuptools over distutils
@@ -31,7 +31,7 @@ setup(
     # There are some restrictions on what makes a valid project name
     # specification here:
     # https://packaging.python.org/specifications/core-metadata/#name
-    name='ipaddressrange',  # Required
+    name='iprange',  # Required
 
     # Versions should comply with PEP 440:
     # https://www.python.org/dev/peps/pep-0440/
@@ -60,7 +60,7 @@ setup(
     #
     # This field corresponds to the "Home-Page" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#home-page-optional
-    url='https://github.com/timmyson/ipaddressrange',
+    url='https://github.com/timmyson/iprange',
 
     # This should be your name or the name of the organization which owns the
     # project.
@@ -68,7 +68,7 @@ setup(
 
     # This should be a valid email address corresponding to the author listed
     # above.
-    author_email='tifoster@akamai.com',
+    author_email='timmyson@gmail.com',
 
     # Classifiers help users find your project by categorizing it.
     #
