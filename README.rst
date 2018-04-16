@@ -1,18 +1,20 @@
-iprange
+ipspan
 =======================
 
-iprange is a basic library that supports converting between a list
+ipspan is a basic library that supports converting between a list
 of IP addresses and several different forms of range notation.
 
 The primary audience is developers looking to concisely communicate lists
 of IP addresses.
 
 `The source for this project is available here
-<https://github.com/>`_.
+<https://github.com/tifoster/ipspan>`_.
+
+Copyright (c) 2018 Akamai Technologies, Inc.
 
 ----
 
-This project was based on the Python Sample Project distributed from 
+This project was based on the Python Sample Project distributed from
 `<https://packaging.python.org/>`_.
 
 This is the README file for the project.

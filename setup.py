@@ -1,7 +1,7 @@
 """A library for concisely expressing groups of IP addresses
 
 See:
-https://github.com/timmyson/iprange
+https://github.com/tifoster/ipspan
 """
 
 # Always prefer setuptools over distutils
@@ -31,7 +31,7 @@ setup(
     # There are some restrictions on what makes a valid project name
     # specification here:
     # https://packaging.python.org/specifications/core-metadata/#name
-    name='iprange',  # Required
+    name='ipspan',  # Required
 
     # Versions should comply with PEP 440:
     # https://www.python.org/dev/peps/pep-0440/
@@ -60,7 +60,7 @@ setup(
     #
     # This field corresponds to the "Home-Page" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#home-page-optional
-    url='https://github.com/timmyson/iprange',
+    url='https://github.com/tifoster/ipspan',
 
     # This should be your name or the name of the organization which owns the
     # project.
@@ -68,7 +68,7 @@ setup(
 
     # This should be a valid email address corresponding to the author listed
     # above.
-    author_email='timmyson@gmail.com',
+    author_email='tifoster@akamai.com',
 
     # Classifiers help users find your project by categorizing it.
     #
@@ -102,7 +102,7 @@ setup(
     # project page. What does your project relate to?
     #
     # Note that this is a string of words separated by whitespace, not a list.
-    keywords='ip address addresses range readability summary',
+    keywords='ip address addresses range span readability summary',
 
     # You can just specify package directories manually here if your project is
     # simple. Or you can use find_packages().

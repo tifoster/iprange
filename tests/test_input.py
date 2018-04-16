@@ -1,5 +1,5 @@
 from ipaddress import IPv4Address, AddressValueError
-from iprange import ip_rangify, IPRange
+from ipspan import ip_rangify, IPRange
 import pytest
 
 
@@ -45,7 +45,7 @@ class Test_ip_rangify(object):
 
 
 class Test_IPRange(object):
-    happy_triples = (  # Tuples of the form: (constructor,repr,str)
+    happy_quads = (  # Tuples of the form: (constructor,repr,str)
         (  # Basic cases
             IPRange(IPv4Address('192.168.1.1'), end=IPv4Address('192.168.1.4')),
             "IPRange(IPv4Address('192.168.1.1'), end=IPv4Address('192.168.1.4'))",
@@ -92,7 +92,7 @@ class Test_IPRange(object):
     )
 
     def test_happy_path(self):
-        for arg, range_repr, range_str, range_start_end in self.happy_triples:
+        for arg, range_repr, range_str, range_start_end in self.happy_quads:
             assert repr(arg) == range_repr
             assert str(arg) == range_str
             assert arg.start_to_end() == range_start_end
